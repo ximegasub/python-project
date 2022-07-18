@@ -2,6 +2,7 @@
 Basic Python Flask app in Docker which displays the hour, date, timezone, hostname and ip address of the container
 
 ### Project structure
+```
 python-project/
 ├── src
 │   ├── __init__.py
@@ -11,6 +12,7 @@ python-project/
 │   ├── details.json
 ├── requirements.txt
 └── Dockerfile
+```
 
 ### Build application
 Build the Docker image manually by cloning the Git repo.
@@ -28,7 +30,7 @@ docker pull ximegasub/python-flask-docker
 ### Run the container
 Create a container from the image.
 ```
-$ docker run -it --name <container name> -d -p 8000:8000 -v <dir to save json>:/python-app/data/ ximegasub/python-flask-docker
+$ docker run -it --name <container name> -d -p 8000:8000 -v /python-app/data ximegasub/python-flask-docker
 ```
 
 Visit http://localhost:8000/details
