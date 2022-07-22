@@ -1,0 +1,69 @@
+version: '3.8'
+services:
+  sonarqube:
+    image: sonarqube
+    ports:
+      - "9000:9000"
+    networks:
+      - final-project-network:
+    environment:
+      - sonar.jdbc.url=jdbc:postgresql://db:5432/postgres
+      - sonar.jdbc.username=root
+	    - sonar.jdbc.password=test 
+    volumes:
+      - sonarqube_conf:/opt/sonarqube/conf
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+
+  db:
+    image: postgres
+    networks:
+      - final-project-network:
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=test
+    volumes:
+      - postgresql:/var/lib/postgresql
+      - postgresql_data:/var/lib/postgresql/data
+
+  jenkins:
+    image: jenkins
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    networks:
+      - final-project-network:
+    volumes:
+      - jenkins_home:/var/jenkins_home
+
+  nexus:
+    image: nexus
+    ports:
+      - "8081:8081"
+    networks:
+      - final-project-network:
+    volumes:
+      - nexus-data:/nexus-data
+
+  portainer:
+    image: portainer/portainer-ce
+    ports:
+      - "9001:9000"
+    networks:
+      - final-project-network:
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data --network task-network
+
+  
+
+networks:
+  final-project-network:
+    driver: bridge
+
+volumes:
+  sonarqube_conf:
+  sonarqube_data:
+  sonarqube_extensions:
+  postgresql:
+  postgresql_data:

@@ -1,12 +1,13 @@
 from flask import Flask
-from datetime import datetime, timezone
+from datetime import datetime
 import socket
 import tzlocal
 import json
 from netifaces import interfaces, ifaddresses, AF_INET
+from pkg_resources import resource_filename
 
 app = Flask(__name__)
-FILE_PATH = "data/details.json"
+FILE_PATH = resource_filename(__name__, "data/details.json")
 
 def read_data(file_path):
     data = None
@@ -26,6 +27,7 @@ def save_data(host_details, file_path):
         data.get("details").append(host_details)
         with open(file_path, 'w') as f:
             json.dump(data, f)
+    return data
 
 def get_ips():
     ip_addresses = {}
@@ -34,10 +36,15 @@ def get_ips():
         ip_addresses.update({ifaceName: addresses})
     return ip_addresses
 
+@app.route('/')
+def welcome():
+    return "Welcome to the docker final project"
+
 @app.route('/details')
 def get_details():
-    now_date = datetime.now().strftime("%Y-%m-%d")
-    now_time = datetime.now().strftime("%H:%M:%S")
+    now = datetime.now()
+    now_date = now.strftime("%Y-%m-%d")
+    now_time = now.strftime("%H:%M:%S")
     tzone_name = tzlocal.get_localzone_name()
     hostname = socket.gethostname()
     host_ip_address = get_ips()
@@ -49,8 +56,7 @@ def get_details():
         "ip_address": host_ip_address,
     }
     
-    save_data(host_details, FILE_PATH)
-
+    _ = save_data(host_details, FILE_PATH)
     return host_details
 
 @app.route('/list-details')
