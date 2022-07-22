@@ -30,7 +30,7 @@ docker pull ximegasub/python-flask-docker
 ### Run the container
 Create a container from the image.
 ```
-$ docker run -it --name <container name> -d -p 8000:8000 -v /python-app/data ximegasub/python-flask-docker
+$ docker run -it --name <container name> -d -p 8000:8000 -v /python-project/data ximegasub/python-flask-docker
 ```
 
 Visit http://localhost:8000/details:
