@@ -7,8 +7,8 @@ python-project/
 ├── src
 │   ├── __init__.py
 │   ├── app.py
-|   ├── data
-│   ├── details.json
+|   └── data
+│       └── details.json
 ├── requirements.txt
 └── Dockerfile
 ```
