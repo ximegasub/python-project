@@ -1,4 +1,4 @@
-# python-project
+# Final python-project
 Basic Python Flask app in Docker which displays the time, date, timezone, hostname and ip address of the container
 
 ### Project structure
@@ -7,44 +7,46 @@ python-project/
 ├── src
 │   ├── __init__.py
 │   ├── app.py
-│   └── __pycache__
-|   ├── data
-│   ├── details.json
+|   └── data
+│       └── details.json
+├── tests
+│   ├── __init__.py
+│   ├── test_details.py
+|   └── test_data.json
 ├── requirements.txt
-└── Dockerfile
+├── test-requirements.txt
+├── docker-compose.yml
+├── Dockerfile
+├── .gitignore
+├── .dockerignore
+└── .env
+
 ```
 
 ### Build application
 Build the Docker image manually by cloning the Git repo.
 ```
 $ git clone https://github.com/ximegasub/python-project.git
-$ docker build --tag ximegasub/python-flask-docker .
+$ git checkout xsubieta-final-project
+$ docker-compose build
 ```
 
-### Download precreated image
-You can also just download the existing image from [DockerHub](https://hub.docker.com/r/ximegasub/python-flask-docker).
-```
-docker pull ximegasub/python-flask-docker
-```
-
-### Run the container
+### Run docker compose
 Create a container from the image.
 ```
-$ docker run -it --name <container name> -d -p 8000:8000 -v /python-project/data ximegasub/python-flask-docker:ximena.subieta
+$ docker-compose up -d
 ```
 
-Visit http://localhost:8000/details:
-```
-{"date":"2022-07-18","hostname":"d4eb987b46e8","ip_address":{"eth0":["172.17.0.4"],"lo":["127.0.0.1"]},"time":"00:45:27","timezone":"Etc/UTC"} 
-```
-Also, visit http://localhost:8000/list-details to see all details.
-
-### Verify the running container
-Verify by checking the container ip and hostname (ID):
-```
-$ docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' <container name>
-172.17.0.4
-$ docker inspect -f '{{ .Config.Hostname }}' <container name>
-d4eb987b46e8
-```
+Visit:
+Python Application
+-  http://localhost:8000/details
+-  http://localhost:8000/list-details
+Portainer
+-  http://localhost:9001
+Nexus:
+-  http://localhost:8081
+Jenkins:
+-  http://localhost:8080
+Sonarqube
+-  http://localhost:9000  
 
