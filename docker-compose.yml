@@ -85,3 +85,4 @@ volumes:
   nexus-data:
   portainer_data:
   app_data:
+  

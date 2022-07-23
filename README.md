@@ -32,7 +32,6 @@ $ docker-compose build
 ```
 
 ### Run docker compose
-Create a container from the image.
 ```
 $ docker-compose up -d
 ```
@@ -49,4 +48,3 @@ Jenkins:
 -  http://localhost:8080
 Sonarqube
 -  http://localhost:9000  
-
