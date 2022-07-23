@@ -58,11 +58,10 @@ services:
       final-project-network:
     volumes:
       - portainer_data:/data
-    restart: no
 
   app:
     build: .
-    image: final-project:0.1
+    image: final-project:latest
     ports:
       - "8000:8000"
     networks:

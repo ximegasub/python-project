@@ -37,14 +37,10 @@ $ docker-compose up -d
 ```
 
 Visit:
-Python Application
--  http://localhost:8000/details
--  http://localhost:8000/list-details
-Portainer
--  http://localhost:9001
-Nexus:
--  http://localhost:8081
-Jenkins:
--  http://localhost:8080
-Sonarqube
--  http://localhost:9000  
+
+-  Python Application: http://localhost:8000/details
+-  Python Application: http://localhost:8000/list-details
+-  Portainer: http://localhost:9001
+-  Nexus: http://localhost:8081
+-  Jenkins: http://localhost:8080
+-  Sonarqube: http://localhost:9000  
