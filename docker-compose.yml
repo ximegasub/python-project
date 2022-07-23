@@ -1,69 +1,87 @@
 version: '3.8'
+
 services:
   sonarqube:
     image: sonarqube
     ports:
       - "9000:9000"
     networks:
-      - final-project-network:
+      final-project-network:
     environment:
-      - sonar.jdbc.url=jdbc:postgresql://db:5432/postgres
-      - sonar.jdbc.username=root
-	    - sonar.jdbc.password=test 
+      - sonar.jdbc.url=jdbc:postgresql://postgres/postgres
+      - sonar.jdbc.username=${USER}
+      - sonar.jdbc.password=${PASSWORD}
     volumes:
       - sonarqube_conf:/opt/sonarqube/conf
       - sonarqube_data:/opt/sonarqube/data
       - sonarqube_extensions:/opt/sonarqube/extensions
+    depends_on:
+      - postgres
 
-  db:
+  postgres:
     image: postgres
     networks:
-      - final-project-network:
+      final-project-network:
     environment:
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=test
+      - POSTGRES_USER=${USER}
+      - POSTGRES_PASSWORD=${PASSWORD}
     volumes:
       - postgresql:/var/lib/postgresql
       - postgresql_data:/var/lib/postgresql/data
 
   jenkins:
-    image: jenkins
+    image: jenkins/jenkins
     ports:
       - "8080:8080"
       - "50000:50000"
     networks:
-      - final-project-network:
+      final-project-network:
     volumes:
       - jenkins_home:/var/jenkins_home
+    restart: always
 
   nexus:
-    image: nexus
+    image: sonatype/nexus3
     ports:
       - "8081:8081"
     networks:
-      - final-project-network:
+      final-project-network:
     volumes:
       - nexus-data:/nexus-data
+    restart: unless-stopped
 
   portainer:
     image: portainer/portainer-ce
     ports:
       - "9001:9000"
     networks:
-      - final-project-network:
+      final-project-network:
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - portainer_data:/data --network task-network
+      - portainer_data:/data
+    restart: no
 
-  
+  app:
+    build: .
+    image: final-project:0.1
+    ports:
+      - "8000:8000"
+    networks:
+      final-project-network:
+    volumes:
+      - app_data:/python-project/src/data
+    restart: on-failure
 
 networks:
   final-project-network:
     driver: bridge
-
+    
 volumes:
   sonarqube_conf:
   sonarqube_data:
   sonarqube_extensions:
   postgresql:
   postgresql_data:
+  jenkins_home:
+  nexus-data:
+  portainer_data:
+  app_data:
