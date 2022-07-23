@@ -17,13 +17,13 @@ python-project/
 Build the Docker image manually by cloning the Git repo.
 ```
 $ git clone https://github.com/ximegasub/python-project.git
-$ docker build --tag ximegasub/python-flask-docker .
+$ docker build --tag ximegasub/python-flask-docker:ximena.subieta .
 ```
 
 ### Download precreated image
 You can also just download the existing image from [DockerHub](https://hub.docker.com/r/ximegasub/python-flask-docker).
 ```
-docker pull ximegasub/python-flask-docker
+docker pull ximegasub/python-flask-docker:ximena.subieta
 ```
 
 ### Run the container
