@@ -7,7 +7,6 @@ python-project/
 ├── src
 │   ├── __init__.py
 │   ├── app.py
-│   └── __pycache__
 |   ├── data
 │   ├── details.json
 ├── requirements.txt
